@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <cctype>
+#include <windows.h>
 
 using namespace std;
 class Bank{
@@ -850,6 +851,24 @@ catch(...){
 };
 
 int main(){
+	
+		cout<<endl<<endl;
+	cout<<" EEEEEEEEE      EEEEEEEEEEEE    EEEEEEEEEEE   EEEEEE        EEEE  EEEE    EEE     "<<endl;
+	cout<<" EEEEEEEEE      EEEEEEEEEEEEE  EEEEEEEEEEEEE  EEEEEEE       EEEE  EEEE   EEE      "<<endl;
+	cout<<" EEEE           EEEE     EEEE  EEEE     EEEE  EEEE EEEE     EEEE  EEEE  EEE       "<<endl;
+	cout<<" EEEE           EEEE     EEEE  EEEE     EEEE  EEEE  EEEE    EEEE  EEEE EEE        "<<endl;
+	cout<<" EEEEEEEEE EEEE EEEEEEEEEEEEE  EEEEEEEEEEEEE  EEEE   EEEE   EEEE  EEEEEEE         "<<endl;
+	cout<<" EEEEEEEEE EEEE EEEEEEEEEEEEE  EEEEEEEEEEEEE  EEEE    EEEE  EEEE  EEEEEEE         "<<endl;
+	cout<<" EEEE           EEEE     EEEE  EEEE     EEEE  EEEE     EEEE EEEE  EEEE EEE        "<<endl;
+	cout<<" EEEE           EEEE     EEEE  EEEE     EEEE  EEEE      EEEEEEEE  EEEE  EEE       "<<endl;
+	cout<<" EEEEEEEEE      EEEEEEEEEEEEE  EEEE     EEEE  EEEE       EEEEEEE  EEEE   EEE      "<<endl;
+	cout<<" EEEEEEEEE      EEEEEEEEEEEE   EEEE     EEEE  EEEE        EEEEEE  EEEE    EEE     "<<endl;
+		
+		cout<<endl<<endl;
+	cout<<" EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<endl
+		<<" EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+		cout<<endl<<endl;
+			
 		Bank Info;
 		Info.Option();
 		switch(Info.Options){
