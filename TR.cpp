@@ -857,6 +857,27 @@ int main(){
 				LOGOS.Logo();
 				Info.Personaldetail();
 				Info.FamilyDetail();
+				cout<<"\n\n Do you want to stay or leave.";
+				cout<<"\n 1.Leave";
+				cout<<"\n 2.Stay \n";
+				int option;
+				cout<<"Enter option: ";
+				cin>>option;
+				switch(option){
+					case 1:
+						cout<<"Good Bye, See you later.";
+						optionChecker = false;
+						outter=false;
+						break;
+					case 2:
+						optionChecker = true;
+						outter=false;
+						break;
+					default:
+						cout<<"Sorry we closed you.";
+						optionChecker = false;
+						outter=false;		
+				}
 				break;
 			case 2:
 				transferMoneyOptions = true;
@@ -974,17 +995,21 @@ int main(){
 				int option;
 				cout<<"Enter option: ";
 				cin>>option;
-				if(option==1){
-					cout<<"Good Bye, See you later.";
-					optionChecker = false;
-					outter=false;
-				}else if(option==2){
-					optionChecker = true;
-					outter=false;
-				}else{
-					cout<<"Sorry we closed you.";
-					optionChecker = false;
-					outter=false;
+				
+				switch(option){
+					case 1:
+						cout<<"Good Bye, See you later.";
+						optionChecker = false;
+						outter=false;
+						break;
+					case 2:
+						optionChecker = true;
+						outter=false;
+						break;
+					default:
+						cout<<"Sorry we closed you.";
+						optionChecker = false;
+						outter=false;		
 				}
 					}
 				break;
