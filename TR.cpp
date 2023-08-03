@@ -3,13 +3,41 @@
 #include <string>
 #include <cctype>
 #include <windows.h>
+#include <regex>
+#include <regex>
 
 using namespace std;
+
+#ifdef _WIN32
+#include <cstdlib>
+	void clearConsole(){
+	system("cls");
+	}
+#elif __linux__
+	#include <cstdlib>
+	void clearConsole(){
+		system("clear");
+	}
+#elif __Apple__
+	#include <cstdlid>
+	void clearConsole(){
+		system("clear");
+	}
+#else
+	void clearConsole(){
+		//Unsupported platform
+	}
+#endif
+
+bool isEmail(const string& input){
+		regex pattern(R"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})");
+		return regex_match(input, pattern);
+		}
+		
 class Bank{
 	private:
 	
 	public:
-	//Declare Variable
 	string Create_Account;
 	double Transfer_Money;
 	double Airtime_And_Bundle;
@@ -45,15 +73,14 @@ class Bank{
 	
 	void Option(){	
 	try{
-		//Display the option to be Chosen from
 	cout<<"\n Welcome to E-BANK";
 	cout<<"\n 1.Create Account"
 		<<"\n 2.Transfer Money"
 		<<"\n 3.Airtime and Bundle"
 		<<"\n 4.Personal Detail"
 		<<"\n 5.Change Pin"
-		<<"\n 6.Wallet \n";
-	//Accept input
+		<<"\n 6.Wallet"
+		<<"\n 0.Close \n";
 	cout<<"\n Enter the option: ";
 	cin >>Options;
 }
@@ -63,10 +90,9 @@ catch(...){
 }
 
 	void Personaldetail(){
-			//collect personal details
 			try{
 			cout<<"\n Create Account";
-			cout<<"\n Personal Details";//Take in user personal details
+			cout<<"\n Personal Details";
 			bool checker=true;
 			while (checker){
 			cout<<"\n Enter your First Name: ";
@@ -79,7 +105,6 @@ catch(...){
 				checker = false;
 			}
 			}
-			
 			ofstream FirstName("../DatabaseFile/FirstName.txt");
 			if(FirstName.is_open()){
 				FirstName<<First_Name<<endl;
@@ -103,17 +128,12 @@ catch(...){
 			}
 			SecondName.close();
 			try{
-			
 			checker = true;
 			while(checker){
-				
-				
 			cout<<"\n Enter your Age: ";
 			cin>> Convecter;
-			
 			try {
 	        Age = stoi(Convecter);
-	        //cout << "You entered: " << Age << endl;
 	        checker = false;
 	   		} catch (const invalid_argument& e) {
 	        cout << "Invalid input: not an integer." << endl;
@@ -130,12 +150,10 @@ catch(...){
 		catch(int a){
 			cout<<"2222  "<<a;
 		}
-		try{
 			bool phoneNumberCheck=true;
-			while (phoneNumberCheck){//Checking for 9 digit numbers
+			while (phoneNumberCheck){
 				cout<<"\n Enter your Phone Number 233(0): ";
 				cin >>Convecter;
-				//throw Phone_Number;
 				try{
 					Phone_Number =stoi(Convecter);
 				}
@@ -149,16 +167,12 @@ catch(...){
 						phoneNumberCheck=false;
 					}
 			}
-		}
-		catch(...){
-			cout<<"HHHH";
-		}
 			ofstream Phone("../DatabaseFile/PhoneNumber.txt");
 			if(Phone.is_open()){
 				Phone<<Phone_Number<<endl;
 			}
 			Phone.close();
-			try{
+			
 			checker=true;
 			while (checker){
 			cout<<"\n Enter your first Address: ";
@@ -175,11 +189,6 @@ catch(...){
 			if(Address.is_open()){
 				Address<<Address1<<endl;
 			}Address.close();
-			}
-		catch(...){
-			cout<<"1111";
-		}
-		try{
 			checker=true;
 			while (checker){
 			cout<<"\n Enter your second Address: ";
@@ -197,29 +206,18 @@ catch(...){
 				AddressNext<<Address2<<endl;
 			}
 			AddressNext.close();
-			}
-		catch(...){
-			cout<<"3333";
-		}
-			checker=true;
-			bool CheckEmail = true;
-			while (checker){
-			while(CheckEmail){
-			cout<<"\n Enter your Email Address: ";
+		checker=true;
+		while (checker){
+		cout<<"\n ENTER A VALID EMAIL ADDRESS PLEASE ";
+		cout<<"\n Enter your Email Address: ";
 			cin>>Email;
-			count = Email.length();
-			
-			if(count<10){
-				cout<<"Check the Email again";	
-			}
-			else{
-				checker = false;
-				for(char c: Email){
-				if(c=='@'){
-					for(char a: Email){
-					if(a=='.'){
-				CheckEmail=false;
-			}	}	}	}	}	}	}
+		if(isEmail(Email)){
+			cout<<"\n Valid email "<<Email<<endl;
+			checker=false;
+		}else{
+			cout<<"\n Invalid email "<<Email<<endl;
+		}	
+	}
 			ofstream EmailFile("../DatabaseFile/EmailFile.txt");
 			if(EmailFile.is_open()){
 				EmailFile<<Email<<endl;
@@ -242,12 +240,10 @@ catch(...){
 				KinsFile<<Kins<<endl;
 			}
 			KinsFile.close();
-			bool phoneNumberCheck=true;
-			while (phoneNumberCheck){//Checking for 9 digit numbers
-			
+			phoneNumberCheck=true;
+			while (phoneNumberCheck){
 			cout<<"\n Enter your Next of Kins phone number: ";
 			cin>>Convecter;
-			
 			try{
 				Kinsnumber = stoi(Convecter);
 			}
@@ -276,7 +272,7 @@ catch(...){
 			}
 	
 	void FamilyDetail(){
-			//collect family details
+
 			try{
 			cout<<"\n Enter your Mother's Name: ";
 			cin>>Mother_Name;
@@ -286,10 +282,9 @@ catch(...){
 			}
 			MotherName.close();
 			bool phoneNumberCheck=true;
-			while (phoneNumberCheck){//Checking for 9 digit numbers
+			while (phoneNumberCheck){
 			cout<<"\n Enter your Mother's Number: ";
 			cin>>Convecter;
-			
 			try{
 				Mother_Number = stoi(Convecter);
 			}
@@ -299,7 +294,6 @@ catch(...){
 			catch(const out_of_range& e){
 				cout<<"Invalid input: Out of range"<<endl;
 			}
-		//	throw Mother_Number;
 				if(Mother_Number>=200000000 && Mother_Number<=999999999){
 						phoneNumberCheck=false;
 					}
@@ -317,7 +311,7 @@ catch(...){
 			}
 			FatherName.close();
 			phoneNumberCheck=true;
-			while (phoneNumberCheck){//Checking for 9 digit numbers
+			while (phoneNumberCheck){
 			cout<<"\n Enter your Father's Number: ";
 			cin >> Convecter;
 			try{
@@ -371,7 +365,7 @@ catch(...){
 					}
 					WifeName.close();
 					phoneNumberCheck=true;
-					while (phoneNumberCheck){//Checking for 9 digit numbers	
+					while (phoneNumberCheck){	
 						cout<<"\n Enter your Wife's Number: ";
 						cin >> Convecter;
 						try{
@@ -402,15 +396,13 @@ catch(...){
 				RelationshipCheck=true;
 			}
 		}
-
-				ofstream WifeNumber("../DatabaseFile/WifeNumber.txt");
-							if(WifeNumber.is_open()){
-								WifeNumber<<Wife_Number<<endl;
-							}
-							WifeNumber.close();
-							
-							bool checker =true;
-							while(checker){
+		ofstream WifeNumber("../DatabaseFile/WifeNumber.txt");
+				if(WifeNumber.is_open()){
+				WifeNumber<<Wife_Number<<endl;
+				}
+				WifeNumber.close();
+				bool checker =true;
+				while(checker){
 			cout<<"\n Enter the number of your Children: ";
 			cin >> Convecter;
 			try{
@@ -437,7 +429,7 @@ catch(...){
 			try{
 				Pin = stoi(Convecter);
 				string len = to_string(Pin);
-				count= len.length();//First_Name.length();
+				count= len.length();
 				if(count==4){
 					checker=false;
 				}else{
@@ -487,7 +479,8 @@ catch(...){
 		cout<<"\n Transfer Money";
 		cout<<"\n 1.Mobile Transfer"
 			<<"\n 2.Bank Account"
-			<<"\n 3.Withdrawal \n";
+			<<"\n 3.Withdrawal \n"
+			<<" 0.Back \n";
 		cout<<"\n Enter option: ";
 		cin>>TransferMoneyOptions;
 	}
@@ -496,7 +489,8 @@ catch(...){
 		cout<<"\n Airtime and Bundle ";
 		cout<<"\n 1.MTN"
 			<<"\n 2.AirtelTigo"
-			<<"\n 3.Vodafone \n";
+			<<"\n 3.Vodafone \n"
+			<<" 0.Back \n";
 			cout<<"\n Enter option: ";
 			cin>>AirtimeAndBundleOptions;
 	}
@@ -505,7 +499,8 @@ catch(...){
 		cout<<"\n Money Transfer ";
 		cout<<"\n 1.MTN"
 			<<"\n 2.AirtelTigo"
-			<<"\n 3.Vodafone \n";
+			<<"\n 3.Vodafone \n"
+			<<" 0.Back \n";
 			cout<<"\n Enter option: ";
 			cin>>MoneyTransferOptions;
 	}
@@ -515,7 +510,7 @@ catch(...){
 					bool phoneNumberCheck=true;
 					bool phoneNumber=true;	
 					while (phoneNumber){
-						while (phoneNumberCheck){//Checking for 9 digit numbers	
+						while (phoneNumberCheck){	
 						cout<<"\n Enter your the number 233(0): ";
 						cin >> Phone_Number;
 						if(Phone_Number>=200000000 && Phone_Number<=999999999){
@@ -533,7 +528,6 @@ catch(...){
 				cin>>Amount;
 				cout<<"\n Enter pin: ";
 				cin>>Pin;
-				/*Check if Pin match*/
 				string line;
 				ifstream PIN("../DatabaseFile/PIN.txt");
 				while(getline(PIN, line)){
@@ -553,7 +547,7 @@ catch(...){
 					bool phoneNumberCheck=true;
 					bool phoneNumber=true;	
 					while (phoneNumber){
-						while (phoneNumberCheck){//Checking for 9 digit numbers	
+						while (phoneNumberCheck){
 						cout<<"\n Enter your the number 233(0): ";
 						cin >> Phone_Number;
 						if(Phone_Number>=200000000 && Phone_Number<=999999999){
@@ -571,7 +565,6 @@ catch(...){
 				cin>>Amount;
 				cout<<"\n Enter pin: ";
 				cin>>Pin;
-				/*Check if Pin match*/
 				string line;
 				ifstream PIN("../DatabaseFile/PIN.txt");
 				while(getline(PIN, line)){
@@ -590,7 +583,7 @@ catch(...){
 					bool phoneNumberCheck=true;
 					bool phoneNumber=true;	
 					while (phoneNumber){
-						while (phoneNumberCheck){//Checking for 9 digit numbers	
+						while (phoneNumberCheck){	
 						cout<<"\n Enter your the number 233(0): ";
 						cin >> Phone_Number;
 						if(Phone_Number>=200000000 && Phone_Number<=999999999){
@@ -608,7 +601,6 @@ catch(...){
 				cin>>Amount;
 				cout<<"\n Enter pin: ";
 				cin>>Pin;
-				/*Check if Pin match*/
 				string line;
 				ifstream PIN("../DatabaseFile/PIN.txt");
 				while(getline(PIN, line)){
@@ -651,7 +643,6 @@ catch(...){
 				}
 				PIN.close();
 		}
-		
 		void AgentAccount(){
 			float AgentAccountNumber;
 			float ConfirmAgentAccountNumber;
@@ -681,7 +672,6 @@ catch(...){
 				}
 				PIN.close();
 		}
-
 		void PersonalDetail(){
 			cout<<"\n Enter the pin: ";
 			cin>>Pin;
@@ -690,8 +680,6 @@ catch(...){
 				while(getline(PIN, line)){
 					int num = stoi(line);
 					if(num==Pin){
-				
-				//FirstName
 				string Fname;
 				string fname;
 				ifstream FirstName("../DatabaseFile/FirstName.txt");
@@ -702,8 +690,6 @@ catch(...){
 				cout<<"First Name: "<<Fname<<endl;
 				}
 				FirstName.close();
-				
-				//Second Name
 				string Sname;
 				string sname;
 				ifstream SecondName("../DatabaseFile/SecondName.txt");
@@ -714,32 +700,24 @@ catch(...){
 				cout<<"Second Name: "<<Sname<<endl;
 				}
 				SecondName.close();
-				
-				//Age
 				string age;
 				ifstream AGE("../DatabaseFile/Age.txt");
 				while(getline(AGE, age)){
 				cout<<"Age: "<<age<<endl;
 				}
 				AGE.close();
-				
-				//Email
 				string email;
 				ifstream Email("../DatabaseFile/EmailFile.txt");
 				while(getline(Email, email)){
 				cout<<"Email: "<<email<<endl;
 				}
 				Email.close();
-				
-				//Phone Number
 				string phone;
 				ifstream Phone("../DatabaseFile/PhoneNumber.txt");
 				while(getline(Phone, phone)){
 				cout<<"Phone Number: "<<phone<<endl;
 				}
 				Phone.close();
-				
-				//First Address
 				string address1;
 				int num =1;
 				ifstream Address1("../DatabaseFile/Address.txt");
@@ -754,8 +732,6 @@ catch(...){
 				}
 			}
 				Address1.close();
-				
-				//First Address
 				string address2;
 				int num2 =2;
 				ifstream Address2("../DatabaseFile/Address.txt");
@@ -768,14 +744,8 @@ catch(...){
 							break;
 						}
 				}
-				}
-				
-				Address2.close();
-						
-						
-						
-						
-						
+				}	
+				Address2.close();	
 						cout<<"Transfer successful";
 					}else{
 							cout<<"Incorrect pin";
@@ -788,9 +758,6 @@ catch(...){
 		void ChangePin(){
 			cout<<"Enter Previous pin: ";
 			cin>>Pin;
-			/*
-			Check if previous and current are the same
-			*/
 			string line;
 				ifstream PIN("../DatabaseFile/PIN.txt");
 				while(getline(PIN, line)){
@@ -823,9 +790,6 @@ catch(...){
 		void WalletAccount(){
 			cout<<"Enter pin: ";
 			cin>>Pin;
-			/*
-			Check if Pin is the same as stored
-			*/
 			string file;
 			string line;
 				ifstream PIN("../DatabaseFile/PIN.txt");
@@ -850,121 +814,186 @@ catch(...){
 		
 };
 
+class logo{
+	public:
+		void Logo(){
+			
+			cout<<endl<<endl;
+			cout<<" EEEEEEEEE      EEEEEEEEEEEE    EEEEEEEEEEE   EEEEEE        EEEE  EEEE    EEE     "<<endl;
+			cout<<" EEEEEEEEE      EEEEEEEEEEEEE  EEEEEEEEEEEEE  EEEEEEE       EEEE  EEEE   EEE      "<<endl;
+			cout<<" EEEE           EEEE     EEEE  EEEE     EEEE  EEEE EEEE     EEEE  EEEE  EEE       "<<endl;
+			cout<<" EEEE           EEEE     EEEE  EEEE     EEEE  EEEE  EEEE    EEEE  EEEE EEE        "<<endl;
+			cout<<" EEEEEEEEE EEEE EEEEEEEEEEEEE  EEEEEEEEEEEEE  EEEE   EEEE   EEEE  EEEEEEE         "<<endl;
+			cout<<" EEEEEEEEE EEEE EEEEEEEEEEEEE  EEEEEEEEEEEEE  EEEE    EEEE  EEEE  EEEEEEE         "<<endl;
+			cout<<" EEEE           EEEE     EEEE  EEEE     EEEE  EEEE     EEEE EEEE  EEEE EEE        "<<endl;
+			cout<<" EEEE           EEEE     EEEE  EEEE     EEEE  EEEE      EEEEEEEE  EEEE  EEE       "<<endl;
+			cout<<" EEEEEEEEE      EEEEEEEEEEEEE  EEEE     EEEE  EEEE       EEEEEEE  EEEE   EEE      "<<endl;
+			cout<<" EEEEEEEEE      EEEEEEEEEEEE   EEEE     EEEE  EEEE        EEEEEE  EEEE    EEE     "<<endl;
+				
+			cout<<endl<<endl;
+			cout<<" EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<endl
+				<<" EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+			cout<<endl<<endl;
+		
+			
+		}
+};
+
 int main(){
 	
-		cout<<endl<<endl;
-	cout<<" EEEEEEEEE      EEEEEEEEEEEE    EEEEEEEEEEE   EEEEEE        EEEE  EEEE    EEE     "<<endl;
-	cout<<" EEEEEEEEE      EEEEEEEEEEEEE  EEEEEEEEEEEEE  EEEEEEE       EEEE  EEEE   EEE      "<<endl;
-	cout<<" EEEE           EEEE     EEEE  EEEE     EEEE  EEEE EEEE     EEEE  EEEE  EEE       "<<endl;
-	cout<<" EEEE           EEEE     EEEE  EEEE     EEEE  EEEE  EEEE    EEEE  EEEE EEE        "<<endl;
-	cout<<" EEEEEEEEE EEEE EEEEEEEEEEEEE  EEEEEEEEEEEEE  EEEE   EEEE   EEEE  EEEEEEE         "<<endl;
-	cout<<" EEEEEEEEE EEEE EEEEEEEEEEEEE  EEEEEEEEEEEEE  EEEE    EEEE  EEEE  EEEEEEE         "<<endl;
-	cout<<" EEEE           EEEE     EEEE  EEEE     EEEE  EEEE     EEEE EEEE  EEEE EEE        "<<endl;
-	cout<<" EEEE           EEEE     EEEE  EEEE     EEEE  EEEE      EEEEEEEE  EEEE  EEE       "<<endl;
-	cout<<" EEEEEEEEE      EEEEEEEEEEEEE  EEEE     EEEE  EEEE       EEEEEEE  EEEE   EEE      "<<endl;
-	cout<<" EEEEEEEEE      EEEEEEEEEEEE   EEEE     EEEE  EEEE        EEEEEE  EEEE    EEE     "<<endl;
-		
-		cout<<endl<<endl;
-	cout<<" EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"<<endl
-		<<" EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
-		cout<<endl<<endl;
-			
+		logo LOGOS;
 		Bank Info;
+		bool outter=true;
+		bool airtimeAndBundleOptions=true;
+		bool transferMoneyOptions = true;
+		bool optionChecker = true;
+		while(optionChecker){
+		clearConsole();
+		LOGOS.Logo();
 		Info.Option();
 		switch(Info.Options){
 			case 1:
+				clearConsole();
+				LOGOS.Logo();
 				Info.Personaldetail();
 				Info.FamilyDetail();
 				break;
 			case 2:
-				Info.TransferMoney();		
+				transferMoneyOptions = true;
+				while(transferMoneyOptions){
+				clearConsole();
+				LOGOS.Logo();
+				Info.TransferMoney();	
 				switch(Info.TransferMoneyOptions){
 					case 1:
+						clearConsole();
+						LOGOS.Logo();
 						Info.MoneyTransfer();
 						switch(Info.MoneyTransferOptions){
 							case 1:
+								clearConsole();
+								LOGOS.Logo();
 								Info.MTNTransferMoney();
 								break;
 							case 2:
+								clearConsole();
+								LOGOS.Logo();
 								Info.AirtelTigoTransferMoney();
 								break;
 							case 3:
+								clearConsole();
+								LOGOS.Logo();
 								Info.VodafoneTransferMoney();
 								break;
-					/*		case 4:
-								Info.PersonalDetail();
-								break;*/
 							default:
-								cout<<"\n Incorrect input";
+								clearConsole();
+								LOGOS.Logo();
+								cout<<"\n Incorrect input";		
 					}
 						break;
 					case 2:
+						clearConsole();
+						LOGOS.Logo();
 						Info.BankAccount();
 						break;
 					case 3:
+						clearConsole();
+						LOGOS.Logo();
 						Info.AgentAccount();
 						break;
-			/*		case 4:
-						Info.PersonalDetail();
-						break;*/
+					case 0:
+						clearConsole();
+						LOGOS.Logo();
+						transferMoneyOptions = false;
+						break;
 					default:
+						clearConsole();
+						LOGOS.Logo();
 						cout<<"\n Incorrect input";
-				}
+				}	}
 				break;
 			case 3:
+				airtimeAndBundleOptions = true;
+				while(airtimeAndBundleOptions){
+				clearConsole();
+				LOGOS.Logo();
 				Info.AirtimeAndBundle();
 				switch(Info.AirtimeAndBundleOptions){
 							case 1:
+								clearConsole();
+								LOGOS.Logo();
 								Info.MTNTransferMoney();
 								break;
 							case 2:
+								clearConsole();
+								LOGOS.Logo();
 								Info.AirtelTigoTransferMoney();
 								break;
 							case 3:
+								clearConsole();
+								LOGOS.Logo();
 								Info.VodafoneTransferMoney();
 								break;
-					/*		case 4:
-								Info.PersonalDetail();
-								break;*/
+							case 0:
+								clearConsole();
+								LOGOS.Logo();
+								airtimeAndBundleOptions = false;
+								break;
 							default:
+								clearConsole();
+								LOGOS.Logo();
 								cout<<"\n Incorrect input";
-					}
+					}	}
 				break;
 			case 4:
+				clearConsole();
+				LOGOS.Logo();
 				Info.PersonalDetail();
+				optionChecker = false;
 				break;
 			case 5:
+				clearConsole();
+				LOGOS.Logo();
 				Info.ChangePin();
+				optionChecker = false;
 				break;
 			case 6:
+				clearConsole();
+				LOGOS.Logo();
 				Info.WalletAccount();
+				optionChecker = false;
+				break;
+			case 0:
+				outter=true;
+				while(outter){
+				clearConsole();
+				LOGOS.Logo();
+				cout<<"\n Are you sure you want to close";
+				cout<<"\n 1.Yes";
+				cout<<"\n 2.No \n";
+				int option;
+				cout<<"Enter option: ";
+				cin>>option;
+				if(option==1){
+					cout<<"Good Bye, See you later.";
+					optionChecker = false;
+					outter=false;
+				}else if(option==2){
+					optionChecker = true;
+					outter=false;
+				}else{
+					cout<<"Sorry we closed you.";
+					optionChecker = false;
+					outter=false;
+				}
+					}
 				break;
 			default:
+				clearConsole();
+				LOGOS.Logo();
 				cout<<"\n Incorrect input";
 		}
 	
-	/*
-	Second Switch
-	*/	
-		
-	/*
-	Third Switch
-	*/	
-	/*	switch(Info.MoneyTransferOptions){
-			case 1:
-				Info.MTNTransferMoney();
-				break;
-			case 2:
-				Info.AirtelTigoTransferMoney();
-				break;
-			case 3:
-				Info.VodafoneTransferMoney();
-				break;
-			case 4:
-				Info.PersonalDetail();
-				break;
-				default:
-				cout<<"Incorrect input";
-		}*/
+}
 	return 0;
 }
